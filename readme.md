@@ -1,3 +1,72 @@
+:us:
+
+## Data Analysis of the Historical Series from IPEA's "Map of Violence"
+
+This project implements a Python script for data analysis and **visualization with plots** based on data from **IPEA** (Institute for Applied Economic Research) and its "Map of Violence" database. It allows analyzing data such as Homicide and Suicide Rates by state and year. The dataset also includes gender-separated data, enabling a historical series analysis of violence against women.
+
+The script is operated via **terminal commands**, where the user inputs the years for analysis and specifies the dataset/historical series to be analyzed.
+
+The **program automatically generates plots, one for each specified year**, based on the retrieved data. The plots will be saved in the current directory.
+
+The datasets/historical series currently implemented are:
+
+* Homicide rate
+* Homicide rate for women
+* Suicide rate
+* Suicide rate for women
+
+**Note:** The API data is provided by municipality, but it is aggregated by state to simplify the analysis and plot generation.
+
+### How to Use the Code
+
+1) Create a virtual environment to isolate dependencies:
+
+```bash
+python3 -m venv environment_name
+```
+
+2) Activate the virtual environment:
+
+* Linux command
+   ```bash
+   source environment_name/bin/activate
+   ```
+* Windows command
+   ```bash
+   environment_name/Scripts/activate
+   ```
+
+3) Install the project dependencies
+```bash
+pip install -r requirements.txt
+```
+
+4) Run the project:
+```bash
+python3 projeto_final.py
+```
+
+5) Select the years and the historical series to analyze via terminal inputs.
+
+### Auxiliary File
+The file `info_municipios_ibge.csv` is a CSV extracted from IBGE databases, containing information about Brazilian municipalities. This file is necessary because the IPEA API only returns the municipality codes for the collected data. Therefore, it's required to map each code to its corresponding state to enable state-level aggregation and analysis.
+
+### Python Libraries Used
+
+* **Pandas**: A library for manipulating tabular data with DataFrames, enabling operations similar to `GROUP BY` and pivot tables on DataFrames.
+
+* **Requests**: A library for making HTTP requests easily, simplifying API access.
+
+* **Matplotlib**: A library for creating graphs from the extracted data.
+
+### Inspiration
+I am currently developing a [project](https://github.com/caue-paiva/intelli.gente_data_extraction) funded by FAPESP focused on **public data collection and analysis**. Therefore, I found it fitting to create a final project for the GRACE course monitors that also encompassed this theme.
+
+Additionally, the IPEA "Map of Violence" database includes various historical series, such as gender-based violence and psychological violence, among others. This makes it possible to **expand the project to focus on collecting even more data on violence against women in Brazil**, providing a historical series that allows tracking changes in this scenario over time.
+
+
+:br:
+
 # Projeto Final Monitores Curso GRACE 2024
 
 ## Análise de Dados da Série Histórica do IPEA Mapa Da Violência.
