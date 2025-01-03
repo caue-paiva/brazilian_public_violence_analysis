@@ -6,6 +6,26 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 BASE_URL:str = "https://www.ipea.gov.br/atlasviolencia/" #url básico da API
+ENGLISH:bool = True
+
+class Language:
+   ENGLISH = "english"
+   PORTUGUESE = "portuguese"
+
+   DataNames = {
+        "HOMICIDE_RATE": "homicide_rate" if ENGLISH else "taxa de homicídio",
+        "FEMALE_HOMICIDE_RATE": "female_homicide_rate" if ENGLISH else "taxa de homicídio de mulheres",
+        "SUICIDE_RATE": "suicide_rate" if ENGLISH else "taxa de suicídio",
+        "FEMALE_SUICIDE_RATE": "female_suicide_rate" if ENGLISH else "taxa de suicídio de mulheres",
+   }
+
+   PlotLabels = {
+      "xlabel": "State" if ENGLISH else "Estado",
+      "title": " by State in Year: " if ENGLISH else  "por Estado no ano:",
+      "legend_title": "State" if ENGLISH else "UF" 
+   }
+
+
 
 class TimeSeries(Enum):
    """
@@ -14,19 +34,19 @@ class TimeSeries(Enum):
    Para adicionar uma nova série histórica é somente colocar um novo membro com os valores de id e nome
    """
    HOMICIDE_RATE = {
-      "name": "taxa de homicídio",
+      "name": Language.DataNames["HOMICIDE_RATE"],
       "id": 20
    }
    FEMALE_HOMICIDE_RATE = {
-      "name": "taxa de homicídio de mulheres",
+      "name": Language.DataNames["FEMALE_HOMICIDE_RATE"],
       "id": 52
    }
    SUICIDE_RATE = {
-      "name": "taxa de suicídio",
+      "name": Language.DataNames["SUICIDE_RATE"],
       "id": 323
    }
    FEMALE_SUICIDE_RATE = {
-      "name": "taxa de suicídio de mulheres",
+      "name": Language.DataNames["FEMALE_SUICIDE_RATE"],
       "id": 52
    }
 
@@ -177,12 +197,12 @@ def plot_graphs_by_year(df:pd.DataFrame, time_series:TimeSeries)->None:
       for i, state in enumerate(df_pivot.columns):
          ax.bar(bar_positions[i], df_pivot.loc[year, state], width=bar_width, label=state, color=colors(i))
 
-      ax.set_xlabel('Estado') #cria o gráfico
+      ax.set_xlabel(Language.PlotLabels["xlabel"]) #cria o gráfico
       ax.set_ylabel(f'{series_name}')
-      ax.set_title(f'{series_name} por Estado no ano: {year}')
+      ax.set_title(f'{series_name}{Language.PlotLabels["title"]}{year}')
       ax.set_xticks(bar_positions)
       ax.set_xticklabels(df_pivot.columns, rotation=90)
-      ax.legend(title='UF', bbox_to_anchor=(1.05, 1), loc='upper left')
+      ax.legend(title=Language.PlotLabels["legend_title"], bbox_to_anchor=(1.05, 1), loc='upper left')
 
       #salva o gráfico num arquivo
       plt.savefig(f'{series_name}_estados_grafico_{year}.png', bbox_inches='tight')
